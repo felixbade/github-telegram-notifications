@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "lib": ["es2017"],
+        "module": "commonjs",
+        "target": "es5",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "outDir": "dist/",
+        "strictPropertyInitialization": false,
+        "types": [
+            "node"
+        ],
+        "jsx": "react"
+    },
+    "include": [
+        "lib/**/*.ts", "lib/**/*.tsx",
+    ],
+    "exclude": [
+        "node_modules/"
+    ]
+}
