@@ -1,0 +1,7 @@
+{
+  "name": "github-notifications",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Felix Bade <flix.bade@gmail.com>",
+  "license": "MIT"
+}
