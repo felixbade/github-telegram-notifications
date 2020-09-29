@@ -16,7 +16,7 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
     console.log(req.body)
-    await sendMessage(req.body.stringify())
+    await sendMessage(JSON.stringify(req.body))
     res.send('OK!')
 })
 
