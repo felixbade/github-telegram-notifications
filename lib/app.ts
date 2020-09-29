@@ -1,6 +1,5 @@
 import * as express from 'express'
 import * as dotenv from 'dotenv'
-import { default as axios, AxiosResponse } from 'axios'
 import { sendMessage } from './telegram'
 
 dotenv.config()
