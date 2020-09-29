@@ -15,8 +15,38 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/', async (req, res) => {
-    console.log(req.body)
-    await sendMessage(JSON.stringify(req.body))
+    const body = req.body
+
+    console.log(JSON.stringify(body, null, 4))
+
+    let messageToTelegram
+
+    const commits = body.commits
+    if (commits !== undefined) {
+        const repositoryName = body.repository.name
+        const branch = body.ref.replace('refs/heads/', '')
+
+        let numberOfCommits
+        if (commits.length === 1) {
+            numberOfCommits = `1 new commit`
+        } else {
+            numberOfCommits = `${commits.length} new commits`
+        }/* else {
+            // if truncated
+            numberOfCommits = `${commits.length}+ new commits`
+        }*/
+
+        const commitsText = commits.map((commit) => {
+            const commitHash = commit.id.substring(0, 7);
+            const message = commit.message
+            const committer = commit.committer.name
+            return `<a href="${commit.url}">${commitHash}</a>: ${message} by <b>${committer}</b>`
+        }).join('\n\n')
+        
+        messageToTelegram = `🎾 ${numberOfCommits} to <b>${repositoryName}</b> branch <b>${branch}</b>\n\n${commitsText}`
+    }
+
+    await sendMessage(messageToTelegram)
     res.send('OK!')
 })
 
