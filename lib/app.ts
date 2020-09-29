@@ -39,8 +39,8 @@ app.post('/', async (req, res) => {
         const commitsText = commits.map((commit) => {
             const commitHash = commit.id.substring(0, 7);
             const message = commit.message
-            const committer = commit.committer.name
-            return `<a href="${commit.url}">${commitHash}</a>: ${message} by <b>${committer}</b>`
+            const author = commit.author.name
+            return `<a href="${commit.url}">${commitHash}</a>: ${message} by <b>${author}</b>`
         }).join('\n\n')
         
         messageToTelegram = `🎾 ${numberOfCommits} to <b>${repositoryName}</b> branch <b>${branch}</b>\n\n${commitsText}`
