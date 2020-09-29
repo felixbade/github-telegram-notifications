@@ -13,6 +13,11 @@ app.get('/', async (req, res) => {
     res.send('Hello World!')
 })
 
+app.post('/', async (req, res) => {
+    await sendMessage('received post request')
+    res.send('OK!')
+})
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
