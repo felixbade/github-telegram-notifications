@@ -10,8 +10,7 @@ const port = process.env.PORT
 app.use(bodyParser.json())
 
 app.get('/', async (req, res) => {
-    await sendMessage('test message')
-    res.send('Hello World!')
+    res.send('See https://github.com/felixbade/github-telegram-notifications')
 })
 
 app.post('/', async (req, res) => {
