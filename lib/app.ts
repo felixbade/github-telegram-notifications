@@ -7,7 +7,7 @@ dotenv.config()
 
 const app = express()
 const port = process.env.PORT
-app.use(bodyParser)
+app.use(bodyParser.json())
 
 app.get('/', async (req, res) => {
     await sendMessage('test message')
@@ -15,8 +15,8 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/', async (req, res) => {
-    await sendMessage('received post request')
     console.log(req.body)
+    await sendMessage(req.body.stringify())
     res.send('OK!')
 })
 
