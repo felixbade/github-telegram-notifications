@@ -58,7 +58,7 @@ app.post('/', async (req, res) => {
         }
 
         if (body.action === 'closed') {
-            const user = body.sender.user.login
+            const user = body.sender.login
             let messageToTelegram = `${title} in <b>${repositoryName}</b> by <b>${user}</b>\n${branchText}`
             if (pr.merged) {
                 messageToTelegram = '✅ Merged pull request' + messageToTelegram
