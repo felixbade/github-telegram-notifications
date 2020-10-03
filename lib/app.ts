@@ -61,9 +61,9 @@ app.post('/', async (req, res) => {
             const user = body.sender.login
             let messageToTelegram = `${title} in <b>${repositoryName}</b> by <b>${user}</b>\n${branchText}`
             if (pr.merged) {
-                messageToTelegram = '✅ Merged pull request' + messageToTelegram
+                messageToTelegram = '✅ Merged pull request ' + messageToTelegram
             } else {
-                messageToTelegram = '🚫 Rejected pull request' + messageToTelegram
+                messageToTelegram = '🚫 Rejected pull request ' + messageToTelegram
             }
             await sendMessage(messageToTelegram)
         }
