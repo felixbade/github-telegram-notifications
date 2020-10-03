@@ -39,7 +39,12 @@ app.post('/', async (req, res) => {
             return `<a href="${commit.url}">${commitHash}</a>: ${message} by <b>${author}</b>`
         }).join('\n\n')
         
-        const messageToTelegram = `🎾 ${numberOfCommits} to <b>${repositoryName}</b> branch <b>${branch}</b>\n\n${commitsText}`
+        let messageToTelegram = `🎾 ${numberOfCommits} to <b>${repositoryName}</b> branch <b>${branch}</b>\n\n${commitsText}`
+
+        if (body.forced) {
+            messageToTelegram = '🤜 Force push\n' + messageToTelegram
+        }
+
         await sendMessage(messageToTelegram)
     }
 
