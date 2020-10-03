@@ -41,18 +41,28 @@ app.post('/', async (req, res) => {
     }
 
     if (body.pull_request !== undefined) {
+        const repositoryName = body.repository.name
+        const pr = body.pull_request
+        const title = `<a href="${pr.url}">${pr.title}</a>`
+        const author = pr.user.login
+
+        const oldBranch = pr.head.ref
+        const newBranch = pr.base.ref
+        const branchText = `${oldBranch} → ${newBranch}`
+
         if (body.action === 'opened') {
-            const repositoryName = body.repository.name
-            const pr = body.pull_request
-
-            const title = `<a href="${pr.url}">${pr.title}</a>`
-            const author = pr.user.login
-
-            const oldBranch = pr.head.ref
-            const newBranch = pr.base.ref
-            const branchText = `${oldBranch} → ${newBranch}`
-
             const messageToTelegram = `🚚 New pull request ${title} in <b>${repositoryName}</b> by <b>${author}</b>\n${branchText}`
+            await sendMessage(messageToTelegram)
+        }
+
+        if (body.action === 'closed') {
+            const user = pr.sender.user.login
+            let messageToTelegram = `${title} in <b>${repositoryName}</b> by <b>${user}</b>\n${branchText}`
+            if (pr.merged) {
+                messageToTelegram = '✅ Merged pull request' + messageToTelegram
+            } else {
+                messageToTelegram = '🚫 Rejected pull request' + messageToTelegram
+            }
             await sendMessage(messageToTelegram)
         }
     }
