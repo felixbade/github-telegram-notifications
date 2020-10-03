@@ -23,6 +23,7 @@ app.post('/', async (req, res) => {
         const branch = body.ref.replace('refs/heads/', '')
 
         // if body.deleted -> Deleted branch, commits = []
+        // 🧹 Deleted branch feature-1 from repo
 
         let numberOfCommits
         if (body.commits.length === 1) {
@@ -45,7 +46,7 @@ app.post('/', async (req, res) => {
     if (body.pull_request !== undefined) {
         const repositoryName = body.repository.name
         const pr = body.pull_request
-        const title = `<a href="${pr.url}">${pr.title}</a>`
+        const title = `<a href="${pr.html_url}">${pr.title}</a>`
 
         const oldBranch = pr.head.ref
         const newBranch = pr.base.ref
@@ -67,6 +68,8 @@ app.post('/', async (req, res) => {
             }
             await sendMessage(messageToTelegram)
         }
+
+        //body.comment.body -> selitys
     }
 
     res.send('OK!')
