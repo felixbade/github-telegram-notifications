@@ -22,6 +22,8 @@ app.post('/', async (req, res) => {
         const repositoryName = body.repository.name
         const branch = body.ref.replace('refs/heads/', '')
 
+        // if body.deleted -> Deleted branch, commits = []
+
         let numberOfCommits
         if (body.commits.length === 1) {
             numberOfCommits = `1 new commit`
@@ -44,13 +46,13 @@ app.post('/', async (req, res) => {
         const repositoryName = body.repository.name
         const pr = body.pull_request
         const title = `<a href="${pr.url}">${pr.title}</a>`
-        const author = pr.user.login
 
         const oldBranch = pr.head.ref
         const newBranch = pr.base.ref
         const branchText = `${oldBranch} → ${newBranch}`
 
         if (body.action === 'opened') {
+            const author = pr.user.login
             const messageToTelegram = `🚚 New pull request ${title} in <b>${repositoryName}</b> by <b>${author}</b>\n${branchText}`
             await sendMessage(messageToTelegram)
         }
