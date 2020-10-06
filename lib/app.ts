@@ -1,7 +1,7 @@
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as dotenv from 'dotenv'
-import { sendMessage } from './telegram'
+import { sendMessage, htmlEscape } from './telegram'
 
 dotenv.config()
 
@@ -34,7 +34,7 @@ app.post('/', async (req, res) => {
 
         const commitsText = body.commits.map((commit) => {
             const commitHash = commit.id.substring(0, 7);
-            const message = commit.message
+            const message = htmlEscape(commit.message)
             const author = commit.author.name
             return `<a href="${commit.url}">${commitHash}</a>: ${message} by <b>${author}</b>`
         }).join('\n\n')
@@ -51,7 +51,7 @@ app.post('/', async (req, res) => {
     if (body.pull_request !== undefined) {
         const repositoryName = body.repository.name
         const pr = body.pull_request
-        const title = `<a href="${pr.html_url}">${pr.title}</a>`
+        const title = `<a href="${pr.html_url}">${htmlEscape(pr.title)}</a>`
 
         const oldBranch = pr.head.ref
         const newBranch = pr.base.ref

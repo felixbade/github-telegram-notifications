@@ -10,3 +10,7 @@ export const sendMessage = async (text: string) => {
         parse_mode: 'HTML'
     }).catch((e) => console.log(e))
 }
+
+export const htmlEscape = (text: string) => {
+    return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+}
