@@ -4,8 +4,10 @@ export const formatCommits = (body: any) => {
     const repositoryName = body.repository.name
     const branch = body.ref.replace('refs/heads/', '')
 
-    // if body.deleted -> Deleted branch, commits = []
     // 🧹 Deleted branch feature-1 from repo
+    if (body.deleted) {
+        return `🧹 Deleted branch <b>${branch}</b> from <b>${repositoryName}</b>`
+    }
 
     let numberOfCommits
     if (body.commits.length === 1) {
@@ -20,8 +22,13 @@ export const formatCommits = (body: any) => {
         const author = commit.author.name
         return `<a href="${commit.url}">${commitHash}</a>: ${message} by <b>${author}</b>`
     }).join('\n\n')
+
+    let branchDescription = `branch <b>${branch}</b>`
+    if (body.created) {
+        branchDescription = `${branchDescription} (new branch)`
+    }
     
-    let formattedMessage = `🎾 ${numberOfCommits} to <b>${repositoryName}</b> branch <b>${branch}</b>\n\n${commitsText}`
+    let formattedMessage = `🎾 ${numberOfCommits} to <b>${repositoryName}</b> ${branchDescription}\n\n${commitsText}`
 
     if (body.forced) {
         formattedMessage = '🤜 Force push\n' + formattedMessage
