@@ -1,7 +1,8 @@
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as dotenv from 'dotenv'
-import { sendMessage, htmlEscape } from './telegram'
+import { sendMessage } from './telegram'
+import { formatCommits, formatPullRequest } from './format'
 
 dotenv.config()
 
@@ -19,62 +20,17 @@ app.post('/', async (req, res) => {
     console.log(JSON.stringify(body, null, 4))
 
     if (body.commits !== undefined) {
-        const repositoryName = body.repository.name
-        const branch = body.ref.replace('refs/heads/', '')
-
-        // if body.deleted -> Deleted branch, commits = []
-        // 🧹 Deleted branch feature-1 from repo
-
-        let numberOfCommits
-        if (body.commits.length === 1) {
-            numberOfCommits = `1 new commit`
-        } else {
-            numberOfCommits = `${body.commits.length} new commits`
+        const messageToTelegram = formatCommits(body)
+        if (messageToTelegram !== undefined) {
+            await sendMessage(messageToTelegram)
         }
-
-        const commitsText = body.commits.map((commit) => {
-            const commitHash = commit.id.substring(0, 7);
-            const message = htmlEscape(commit.message)
-            const author = commit.author.name
-            return `<a href="${commit.url}">${commitHash}</a>: ${message} by <b>${author}</b>`
-        }).join('\n\n')
-        
-        let messageToTelegram = `🎾 ${numberOfCommits} to <b>${repositoryName}</b> branch <b>${branch}</b>\n\n${commitsText}`
-
-        if (body.forced) {
-            messageToTelegram = '🤜 Force push\n' + messageToTelegram
-        }
-
-        await sendMessage(messageToTelegram)
     }
 
     if (body.pull_request !== undefined) {
-        const repositoryName = body.repository.name
-        const pr = body.pull_request
-        const title = `<a href="${pr.html_url}">${htmlEscape(pr.title)}</a>`
-
-        const oldBranch = pr.head.ref
-        const newBranch = pr.base.ref
-        const branchText = `${oldBranch} → ${newBranch}`
-
-        if (body.action === 'opened') {
-            const author = pr.user.login
-            const messageToTelegram = `🚚 New pull request ${title} in <b>${repositoryName}</b> by <b>${author}</b>\n${branchText}`
+        const messageToTelegram = formatPullRequest(body)
+        if (messageToTelegram !== undefined) {
             await sendMessage(messageToTelegram)
         }
-
-        if (body.action === 'closed') {
-            const user = body.sender.login
-            let messageToTelegram = `${title} in <b>${repositoryName}</b> by <b>${user}</b>\n${branchText}`
-            if (pr.merged) {
-                messageToTelegram = '✅ Merged pull request ' + messageToTelegram
-            } else {
-                messageToTelegram = '🚫 Rejected pull request ' + messageToTelegram
-            }
-            await sendMessage(messageToTelegram)
-        }
-
-        //body.comment.body -> selitys
     }
 
     res.send('OK!')
