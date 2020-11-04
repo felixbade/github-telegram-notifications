@@ -19,6 +19,6 @@ A simple Node.js Express server that receives GitHub notifications with a webhoo
 
 ## Planned features
 - Say the group chat id to Telegram after the bot has been added to a new group
-  - Also webhook setup instructions
+  - Also GitHub webhook setup instructions
 - Send some success message to Telegram when the integration is set up and GitHub sends a ping
 - More event types, like issues
