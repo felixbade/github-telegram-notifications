@@ -30,4 +30,16 @@ A simple Node.js Express server that receives GitHub notifications with a webhoo
 - More event types, like issues
 
 ## Why?
-I like making software projects with my friends. Repository notifications benefit the team spirit and help stay up to date when someone works on a feature on their own. I didn't like the required permissions and message format in [@GitHubBot](https://t.me/GitHubBot) so we made our own. This is also quicker to set up for new repositories – which is essential for small projects.
+
+### Why an integration?
+- Keep people up to date on what is happening
+- Feeling of togetherness
+- Feeling of momentum
+- Process best practises should be fun
+  - Increase commit message quality
+  - More feature branches
+
+### Why make your own?
+- [@GitHubBot](https://t.me/GitHubBot) needs unreasonable permissions
+- Ours is easier to set up in a new project – critical in small hobby projects
+- Message format is more clear and more delightful
