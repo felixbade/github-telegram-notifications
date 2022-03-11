@@ -1,5 +1,21 @@
 import { htmlEscape } from './telegram'
 
+export const formatEvent = (body: any, event: string) => {
+    // https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#ping
+    if (event === 'ping') {
+        const repositoryName = body.repository.full_name
+        return `🐶 Watching <b>${repositoryName}</b>`
+    }
+
+    if (body.commits !== undefined) {
+        return formatCommits(body)
+    }
+
+    if (body.pull_request !== undefined) {
+        return formatPullRequest(body)
+    }
+}
+
 export const formatCommits = (body: any) => {
     const repositoryName = body.repository.name
     const branch = body.ref.replace('refs/heads/', '')

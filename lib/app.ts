@@ -2,7 +2,7 @@ import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as dotenv from 'dotenv'
 import { sendMessage } from './telegram'
-import { formatCommits, formatPullRequest } from './format'
+import { formatEvent, formatCommits, formatPullRequest } from './format'
 
 dotenv.config()
 
@@ -16,22 +16,15 @@ app.get('/', async (req, res) => {
 
 app.post('/:chat_id(-?\\d+)', async (req, res) => {
     const body = req.body
+    const event = req.headers['x-github-event']
     const chat_id = parseInt(req.params.chat_id)
 
+    console.log(`Event: ${event}`)
     console.log(JSON.stringify(body, null, 4))
 
-    if (body.commits !== undefined) {
-        const messageToTelegram = formatCommits(body)
-        if (messageToTelegram !== undefined) {
-            await sendMessage(chat_id, messageToTelegram)
-        }
-    }
-
-    if (body.pull_request !== undefined) {
-        const messageToTelegram = formatPullRequest(body)
-        if (messageToTelegram !== undefined) {
-            await sendMessage(chat_id, messageToTelegram)
-        }
+    const messageToTelegram = formatEvent(body, event)
+    if (messageToTelegram !== undefined) {
+        await sendMessage(chat_id, messageToTelegram)
     }
 
     res.send('OK!')
