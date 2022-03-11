@@ -22,11 +22,12 @@ A simple Node.js Express server that receives GitHub notifications with a webhoo
 - New pull request
 - Merge pull request
 - Reject pull request
+- Issues
 
 ## Planned features
 - Say the group chat id to Telegram after the bot has been added to a new group
   - Also GitHub webhook setup instructions
-- More event types, like issues
+- More event types
 
 ## Why?
 

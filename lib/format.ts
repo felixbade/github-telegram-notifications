@@ -17,6 +17,23 @@ export const formatEvent = (body: any, event: string) => {
         return `🐶 Watching <b>${title}</b>`
     }
 
+    if (event === 'issues') {
+        if (body.action === 'opened') {
+            const title = `<a href="${body.issue.html_url}">${htmlEscape(body.issue.title)}</a>`
+            const message = body.issue.body
+            const author = body.issue.user.login
+            const repo = body.repository.name
+            return `🍗 New issue <b>${title}</b> in <b>${repo}</b> by <b>${author}</b>\n\n${message}`
+        }
+
+        if (body.action === 'closed') {
+            const title = `<a href="${body.issue.html_url}">${htmlEscape(body.issue.title)}</a>`
+            const author = body.issue.user.login
+            const repo = body.repository.name
+            return `🦴 Closed issue <b>${title}</b> in <b>${repo}</b> by <b>${author}</b>`
+        }
+    }
+
     if (body.commits !== undefined) {
         return formatCommits(body)
     }
