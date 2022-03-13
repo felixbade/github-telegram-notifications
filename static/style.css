@@ -50,6 +50,11 @@ a:hover {
     max-width: 500px;
 }
 
+.article img {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
 .footer {
     margin: 10px;
     font-size: 0.7em;
