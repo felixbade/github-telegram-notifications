@@ -3,10 +3,7 @@ A simple Node.js Express server that receives GitHub notifications with a webhoo
 
 ## Using with Paul the Office Dog (easier)
 - Add [Paul the Office Dog](https://t.me/PaulTheOfficeDogBot) to your Telegram group
-- Get the group chat id. You can use for example [Chat ID Echo bot](https://t.me/chatid_echo_bot).
-- Add a new Webhook to your GitHub repository/organisation:
-  - Payload URL: `https://github-notifications.felixbade.fi/<chat_id>`
-  - Content type: `application/json`
+- Add a webhook to your GitHub respository/organization according to Paul's instructions
   
 ## Running your own instance (more private)
 - Create a bot with [BotFather](https://t.me/BotFather)
@@ -23,11 +20,6 @@ A simple Node.js Express server that receives GitHub notifications with a webhoo
 - Merge pull request
 - Reject pull request
 - Issues
-
-## Planned features
-- Say the group chat id to Telegram after the bot has been added to a new group
-  - Also GitHub webhook setup instructions
-- More event types
 
 ## Why?
 
