@@ -23,7 +23,7 @@ A simple Node.js Express server that receives GitHub notifications with a webhoo
   - Send the app files to your server.
   - Build the node app on the server.
   - (Re)start the PM2 app.
-  - Configure a webhook for Telegram.
+  - Register a webhook for Telegram.
 - Follow the instructions in the Using with Paul the Office Dog section, except use your own Telegram bot.
 
 ## Supported event types
@@ -49,4 +49,4 @@ A simple Node.js Express server that receives GitHub notifications with a webhoo
 ### Why make your own?
 - [@GitHubBot](https://t.me/GitHubBot) needs unreasonable permissions
 - Ours is easier to set up in a new project – critical in small hobby projects
-- Message format is more clear and more delightfu
+- Message format is more clear and more delightful
