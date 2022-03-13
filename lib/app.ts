@@ -33,6 +33,7 @@ app.post('/:chat_id(-?\\d+)', async (req, res) => {
 
 app.post(`/telegram-hook/${process.env.TELEGRAM_SECRET}`, async (req, res) => {
     const body = req.body
+    const domain = req.headers.host
 
     console.log('Telegram')
     console.log(JSON.stringify(body, null, 4))
@@ -46,7 +47,7 @@ app.post(`/telegram-hook/${process.env.TELEGRAM_SECRET}`, async (req, res) => {
                 '',
                 'To get started, go to your repository or organization settings, and add a new webhook.',
                 '',
-                `• Payload URL: <code>https://paultheofficedog.bloat.app/${chat.id}</code>`,
+                `• Payload URL: <code>https://${domain}/${chat.id}</code>`,
                 '• Content type: application/json',
                 '• Select the events you want. I recommend everything.',
                 '',
