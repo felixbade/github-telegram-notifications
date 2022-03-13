@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: rgb(24, 23, 23); /* From GtiHub logo */
+    color: rgb(24, 23, 23); /* From GitHub logo */
 }
 
 h1, h2 {
@@ -17,6 +17,7 @@ h1, h2 {
 a, a:visited {
     text-decoration: none;
     color: hsl(30, 100%, 43%);
+    color: rgb(61, 157, 212); /* From Telegram logo */
 }
 
 a:hover {
