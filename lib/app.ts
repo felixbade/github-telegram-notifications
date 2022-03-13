@@ -7,7 +7,7 @@ import { formatEvent, formatCommits, formatPullRequest } from './format'
 dotenv.config()
 
 const app = express()
-const port = process.env.PORT
+const port = process.env.HTTP_PORT
 app.use(bodyParser.json())
 
 app.get('/', async (req, res) => {
