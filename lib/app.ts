@@ -51,7 +51,7 @@ app.post(`/telegram-hook/${process.env.TELEGRAM_SECRET}`, async (req, res) => {
                 '• Content type: application/json',
                 '• Select the events you want. I recommend everything.',
                 '',
-                'I’ll bark when it works!'
+                'I’ll confirm when it works!'
             ]
             const messageToTelegram = messageLines.join('\n')
 

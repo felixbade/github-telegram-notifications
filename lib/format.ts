@@ -14,7 +14,7 @@ export const formatEvent = (body: any, event: string) => {
             return
         }
         const title = `<a href="${url}">${htmlEscape(name)}</a>`
-        return `👀 Watching <b>${title}</b>`
+        return `👀 Started watching <b>${title}</b>`
     }
 
     if (event === 'issues') {
