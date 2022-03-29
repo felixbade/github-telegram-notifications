@@ -40,7 +40,8 @@ app.post(`/telegram-hook/${process.env.TELEGRAM_SECRET}`, async (req, res) => {
 
     if (body.my_chat_member !== undefined) {
         const { old_chat_member, new_chat_member, chat } = body.my_chat_member
-        if (old_chat_member.status === 'left' && new_chat_member.status === 'member') {
+        if ((old_chat_member.status === 'left' || old_chat_member.status === 'kicked')
+                && (new_chat_member.status === 'member' || new_chat_member.status === 'administrator')) {
             // Added to a new chat
             const messageLines = [
                 '🐶 Hello there! I’m Paul, and I watch GitHub repositories!',
