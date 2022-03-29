@@ -23,7 +23,11 @@ export const formatEvent = (body: any, event: string) => {
             const message = body.issue.body
             const author = body.issue.user.login
             const repo = body.repository.name
-            return `🍗 New issue <b>${title}</b> in <b>${repo}</b> by <b>${author}</b>\n\n${message}`
+            let formatted = `🍗 New issue <b>${title}</b> in <b>${repo}</b> by <b>${author}</b>`
+            if (message !== null) {
+                formatted += `\n\n${message}`
+            }
+            return formatted
         }
 
         if (body.action === 'closed') {
