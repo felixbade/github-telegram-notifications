@@ -112,7 +112,7 @@ export const formatPullRequest = (body: any) => {
         if (pr.merged) {
             return '✅ Merged pull request ' + formattedMessage
         } else {
-            return '🚫 Rejected pull request ' + formattedMessage
+            return '😴 Closed pull request ' + formattedMessage
         }
     }
 
