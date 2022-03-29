@@ -38,6 +38,14 @@ export const formatEvent = (body: any, event: string) => {
         }
     }
 
+    if (event === 'issue_comment') {
+        const title = `<a href="${body.comment.html_url}">New comment</a>`
+        const issue = htmlEscape(body.issue.title)
+        const author = body.comment.user.login
+        const message = body.comment.body
+        return `💬 ${title} in <b>${issue}</b> by <b>${author}</b>\n\n${message}`
+    }
+
     if (body.commits !== undefined) {
         return formatCommits(body)
     }
