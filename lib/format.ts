@@ -24,7 +24,7 @@ export const formatEvent = (body: any, event: string) => {
             const author = body.issue.user.login
             const repo = body.repository.name
             let formatted = `🍗 New issue <b>${title}</b> in <b>${repo}</b> by <b>${author}</b>`
-            if (body.issue.milestone !== undefined) {
+            if (body.issue.milestone !== null) {
                 formatted += `\nMilestone: ${body.issue.milestone.title}`
             } 
             if (message !== null) {
