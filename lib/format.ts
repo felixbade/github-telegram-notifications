@@ -42,8 +42,24 @@ export const formatEvent = (body: any, event: string) => {
         const title = `<a href="${body.comment.html_url}">New comment</a>`
         const issue = htmlEscape(body.issue.title)
         const author = body.comment.user.login
-        const message = body.comment.body
+        const message = htmlEscape(body.comment.body)
         return `💬 ${title} in <b>${issue}</b> by <b>${author}</b>\n\n${message}`
+    }
+
+    if (event === 'milestone') {
+        if (body.action === 'created') {
+            const url = body.milestone.html_url
+            const title = `<a href="${url}">${htmlEscape(body.milestone.title)}</a>`
+            const message = htmlEscape(body.milestone.description)
+            const author = body.milestone.creator.login
+            const repo = body.repository.name
+
+            let formatted = `🛤 New milestone <b>${title}</b> in <b>${repo}</b> by <b>${author}</b>`
+            if (message !== null) {
+                formatted += `\n\n${message}`
+            }
+            return formatted
+        }
     }
 
     if (body.commits !== undefined) {
