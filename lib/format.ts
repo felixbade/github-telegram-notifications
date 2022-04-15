@@ -90,7 +90,7 @@ export const formatCommits = (body: any) => {
         numberOfCommits = `${body.commits.length} new commits`
     }
 
-    const commitsText = body.commits.map((commit) => {
+    const commitsText = body.commits.filter((commit) => commit.distinct).map((commit) => {
         const commitHash = commit.id.substring(0, 7);
         const message = htmlEscape(commit.message)
         const author = commit.author.name
