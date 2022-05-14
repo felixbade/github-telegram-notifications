@@ -50,18 +50,29 @@ export const formatEvent = (body: any, event: string) => {
     }
 
     if (event === 'milestone') {
+        const url = body.milestone.html_url
+        const title = `<a href="${url}">${htmlEscape(body.milestone.title)}</a>`
+        const repo = body.repository.name
+
         if (body.action === 'created') {
-            const url = body.milestone.html_url
-            const title = `<a href="${url}">${htmlEscape(body.milestone.title)}</a>`
             const message = htmlEscape(body.milestone.description)
             const author = body.milestone.creator.login
-            const repo = body.repository.name
 
             let formatted = `🛤 New milestone <b>${title}</b> in <b>${repo}</b> by <b>${author}</b>`
             if (message !== null) {
                 formatted += `\n\n${message}`
             }
             return formatted
+        }
+
+        if (body.action === 'closed') {
+            return `🎉 Closed milestone <b>${title}</b> in <b>${repo}</b>`
+        }
+
+        if (body.action === 'deleted') {
+            const sender = body.sender.login
+            const repo_with_url = `<a href="${body.repository.html_url}">${repo}</a>`
+            return `🗑 Deleted milestone <b>${htmlEscape(body.milestone.title)}</b> in <b>${repo_with_url}</b> by <b>${sender}</b>`
         }
     }
 
