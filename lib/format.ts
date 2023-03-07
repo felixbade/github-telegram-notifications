@@ -102,7 +102,7 @@ export const formatCommits = (body: any) => {
     }
 
     const commitsText = body.commits.filter((commit) => commit.distinct).map((commit) => {
-        const commitHash = commit.id.substring(0, 7);
+        const commitHash = commit.id.substring(0, 4);
         const message = htmlEscape(commit.message)
         const author = commit.author.name
         return `<a href="${commit.url}">${commitHash}</a>: ${message} by <b>${author}</b>`
