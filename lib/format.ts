@@ -129,16 +129,18 @@ export const formatPullRequest = (body: any) => {
 
     const oldBranch = pr.head.ref
     const newBranch = pr.base.ref
-    const branchText = `${oldBranch} → ${newBranch}`
+    // The branch line only carries information when the target is not the default branch.
+    const isDefaultTarget = newBranch === body.repository.default_branch
+    const branchText = isDefaultTarget ? '' : `\n${oldBranch} → ${newBranch}`
 
     if (body.action === 'opened') {
         const author = pr.user.login
-        return `🚚 New pull request ${title} in <b>${repositoryName}</b> by <b>${author}</b>\n${branchText}`
+        return `🚚 New pull request ${title} in <b>${repositoryName}</b> by <b>${author}</b>${branchText}`
     }
 
     if (body.action === 'closed') {
         const user = body.sender.login
-        let formattedMessage = `${title} in <b>${repositoryName}</b> by <b>${user}</b>\n${branchText}`
+        let formattedMessage = `${title} in <b>${repositoryName}</b> by <b>${user}</b>${branchText}`
         if (pr.merged) {
             return '✅ Merged pull request ' + formattedMessage
         } else {
