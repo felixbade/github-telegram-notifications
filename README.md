@@ -4,6 +4,7 @@ A simple Node.js Express server that receives GitHub notifications with a webhoo
 ## Using with Paul the Office Dog (easier)
 - Add [Paul the Office Dog](https://t.me/PaulTheOfficeDogBot) to your Telegram group
 - Add a webhook to your GitHub respository/organization according to Paul's instructions
+- Optional: append `?settings=no-opened-prs` to the payload URL to skip new PR messages (merged and closed PRs are still posted)
   
 ## Running your own instance (more private)
 - Get a server.
@@ -31,9 +32,9 @@ A simple Node.js Express server that receives GitHub notifications with a webhoo
 - Force push
 - New branch
 - Delete branch
-- New pull request
-- Merge pull request
-- Reject pull request
+- New PR
+- Merge PR
+- Reject PR
 - Issues
 
 ## Why?

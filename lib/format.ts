@@ -1,6 +1,6 @@
 import { htmlEscape } from './telegram'
 
-export const formatEvent = (body: any, event: string) => {
+export const formatEvent = (body: any, event: string, settings: Set<string> = new Set()) => {
     // https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#ping
     if (event === 'ping') {
         let name, url
@@ -81,7 +81,7 @@ export const formatEvent = (body: any, event: string) => {
     }
 
     if (body.pull_request !== undefined) {
-        return formatPullRequest(body)
+        return formatPullRequest(body, settings)
     }
 }
 
@@ -122,7 +122,7 @@ export const formatCommits = (body: any) => {
     return formattedMessage
 }
 
-export const formatPullRequest = (body: any) => {
+export const formatPullRequest = (body: any, settings: Set<string> = new Set()) => {
     const repositoryName = body.repository.name
     const pr = body.pull_request
     const title = `<a href="${pr.html_url}">${htmlEscape(pr.title)}</a>`
@@ -134,17 +134,20 @@ export const formatPullRequest = (body: any) => {
     const branchText = isDefaultTarget ? '' : `\n${oldBranch} → ${newBranch}`
 
     if (body.action === 'opened') {
+        if (settings.has('no-opened-prs')) {
+            return undefined
+        }
         const author = pr.user.login
-        return `🚚 New pull request ${title} in <b>${repositoryName}</b> by <b>${author}</b>${branchText}`
+        return `🚚 New PR ${title} in <b>${repositoryName}</b> by <b>${author}</b>${branchText}`
     }
 
     if (body.action === 'closed') {
         const user = body.sender.login
         let formattedMessage = `${title} in <b>${repositoryName}</b> by <b>${user}</b>${branchText}`
         if (pr.merged) {
-            return '✅ Merged pull request ' + formattedMessage
+            return '✅ Merged PR ' + formattedMessage
         } else {
-            return '😴 Closed pull request ' + formattedMessage
+            return '😴 Closed PR ' + formattedMessage
         }
     }
 

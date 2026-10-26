@@ -18,12 +18,14 @@ app.post('/:chat_id(-?\\d+)', async (req, res) => {
     const body = req.body
     const event = req.headers['x-github-event']
     const chat_id = parseInt(req.params.chat_id)
+    // Optional comma-separated flags, e.g. ?settings=no-opened-prs
+    const settings = new Set(String(req.query.settings ?? '').split(',').filter(Boolean))
 
     console.log('GitHub')
     console.log(`Event: ${event}`)
     console.log(JSON.stringify(body, null, 4))
 
-    const messageToTelegram = formatEvent(body, event)
+    const messageToTelegram = formatEvent(body, event, settings)
     if (messageToTelegram !== undefined) {
         await sendMessage(chat_id, messageToTelegram)
     }
